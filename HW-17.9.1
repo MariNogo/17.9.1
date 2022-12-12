@@ -42,6 +42,26 @@ print(array_list)
 
 # 3. Устанавливается номер позиции элемента
 
+# 3. Устанавливается номер позиции элемента
+
+def binary_search(array, element, left, right):
+    try:
+        if left > right:
+            return False
+        middle = (right + left) // 2
+        if array[middle] == element:
+            return middle
+        elif element < array[middle]:
+            return binary_search(array, element, left, middle - 1)
+        else:
+            return binary_search(array, element, middle + 1, right)
+    except IndexError:
+        return 'Число выходит за диапазон списка, введите меньшее число.'
+
+
+# Устанавливается номер позиции элемента, который меньше
+# введенного пользователем числа, а следующий за ним больше или равен этому числу.
+
 print(f'Упорядоченный по возрастанию список: {array_list}')
 
 if not binary_search(array_list, number, 0, len(array_list)):
@@ -65,4 +85,3 @@ if not binary_search(array_list, number, 0, len(array_list)):
         print(f'Индекс введенного элемента: {array_list.index(rI)}')
 else:
     print(f'Индекс введенного элемента: {binary_search(array_list, number, 0, len(array_list))}')
-
