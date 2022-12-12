@@ -1,0 +1,68 @@
+# 1. Преобразование введённой последовательности в список
+
+array = input("Введите последовательность чисел через пробел:").split()
+number = int(input('Введите число:   '))
+array_list = list(map(int, array))
+print(array)
+
+# 2. Сортировка списка по возрастанию элементов в нем
+
+def merge_sort(L):
+    if len(L) < 2:
+        return L[:]
+    else:
+        middle = len(L) // 2
+        left = merge_sort(L[:middle])
+        right = merge_sort(L[middle:])
+        return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i, j = 0, 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    while i < len(left):
+        result.append(left[i])
+        i += 1
+
+    while j < len(right):
+        result.append(right[j])
+        j += 1
+    return result
+
+array_list = merge_sort(array_list)
+print(array_list)
+
+# 3. Устанавливается номер позиции элемента
+
+print(f'Упорядоченный по возрастанию список: {array_list}')
+
+if not binary_search(array_list, number, 0, len(array_list)):
+    rI = min(array_list, key=lambda x: (abs(x - number), x))
+    ind = array_list.index(rI)
+    max_ind = ind + 1
+    min_ind = ind - 1
+    if rI < number:
+        print(f'''В списке нет введенного элемента 
+Ближайший меньший элемент: {rI}, его индекс: {ind}
+Ближайший больший элемент: {array_list[max_ind]} его индекс: {max_ind}''')
+    elif min_ind < 0:
+        print(f'''В списке нет введенного элемента
+Ближайший больший элемент: {rI}, его индекс: {array_list.index(rI)}
+В списке нет меньшего элемента''')
+    elif rI > number:
+        print(f'''В списке нет введенного элемента
+Ближайший больший элемент: {rI}, его индекс: {array_list.index(rI)}
+Ближайший меньший элемент: {array_list[min_ind]} его индекс: {min_ind}''')
+    elif array_list.index(rI) == 0:
+        print(f'Индекс введенного элемента: {array_list.index(rI)}')
+else:
+    print(f'Индекс введенного элемента: {binary_search(array_list, number, 0, len(array_list))}')
+
